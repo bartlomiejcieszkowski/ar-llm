@@ -88,6 +88,7 @@ interface SkillRequestParams {
   min_p?: number;
   presence_penalty?: number;
   repetition_penalty?: number;
+  frequency_penalty?: number;
   chat_template_kwargs?: ChatTemplateKwargs;
   // Provider-specific thinking budget keys (pass-through, no renaming)
   [key: string]: unknown;
@@ -272,6 +273,9 @@ function applySkillParams(payload: any, params: SkillRequestParams): any {
   if (params.repetition_penalty !== undefined) {
     result.repetition_penalty = params.repetition_penalty;
   }
+  if (params.frequency_penalty !== undefined) {
+    result.frequency_penalty = params.frequency_penalty;
+  }
   if (params.chat_template_kwargs !== undefined) {
     result.chat_template_kwargs = params.chat_template_kwargs;
   }
@@ -298,6 +302,7 @@ function formatParams(params: SkillRequestParams): string {
   if (params.min_p !== undefined) parts.push(`mp=${params.min_p}`);
   if (params.presence_penalty !== undefined) parts.push(`pres=${params.presence_penalty}`);
   if (params.repetition_penalty !== undefined) parts.push(`rep=${params.repetition_penalty}`);
+  if (params.frequency_penalty !== undefined) parts.push(`fp=${params.frequency_penalty}`);
   if (params.chat_template_kwargs) {
     const { enable_thinking, preserve_thinking } = params.chat_template_kwargs;
     if (enable_thinking === false) parts.push(`th=off`);
